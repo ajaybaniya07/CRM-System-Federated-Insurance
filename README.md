@@ -1,4 +1,7 @@
 # CRM-System-Federated-Insurance
+
+
+
 The CRM (Customer Relationship Management) System is a comprehensive software application that is designed to manage and maintain all aspects of customer interactions. The main objective of the CRM system is to improve customer relations and maximize customer satisfaction. This project has been developed to design and implement a CRM system for a business organization.
 
 To begin with, a project charter was developed which provided a detailed overview of the project. This document included the project goals, scope, deliverables, and timelines. It also outlined the roles and responsibilities of the project team members, stakeholders, and other relevant individuals.
