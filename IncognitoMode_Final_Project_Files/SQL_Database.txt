@@ -1,0 +1,339 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema federated
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema federated
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `federated` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `federated` ;
+
+-- -----------------------------------------------------
+-- Table `federated`.`board members`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `federated`.`board members` (
+  `Board_Member_ID` INT NOT NULL,
+  `Client_ID` INT NULL DEFAULT NULL,
+  `Owner_ID` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`Board_Member_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `federated`.`calendar`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `federated`.`calendar` (
+  `Calendar_ID` INT NOT NULL,
+  `Current_Date` DATE NULL DEFAULT NULL,
+  `Deadline/Expiration` DATE NULL DEFAULT NULL,
+  `Reminder` VARCHAR(45) NULL DEFAULT NULL,
+  `Marketing_Rep_ID` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`Calendar_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `federated`.`client`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `federated`.`client` (
+  `Client_ID` INT NOT NULL,
+  `Client_Company_Name` VARCHAR(45) NULL DEFAULT NULL,
+  `Client_Phone_Number` VARCHAR(45) NULL DEFAULT NULL,
+  `Client_Email_Address` VARCHAR(45) NULL DEFAULT NULL,
+  `Log_ID` INT NULL DEFAULT NULL,
+  `Calendar_ID` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`Client_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `federated`.`client list`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `federated`.`client list` (
+  `Client_list_ID` INT NOT NULL,
+  `Client_ID` VARCHAR(45) NULL DEFAULT NULL,
+  `Marketing_Rep_ID` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Client_list_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `federated`.`district manager`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `federated`.`district manager` (
+  `District_manager_ID` INT NOT NULL,
+  `Regional_Manager_ID` INT NULL DEFAULT NULL,
+  `Emp_ID` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`District_manager_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `federated`.`employee`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `federated`.`employee` (
+  `Emp_ID` INT NOT NULL,
+  `Emp_First_name` VARCHAR(45) NULL DEFAULT NULL,
+  `Emp_last_name` VARCHAR(45) NULL DEFAULT NULL,
+  `Emp_job_title` VARCHAR(45) NULL DEFAULT NULL,
+  `Emp_username` VARCHAR(45) NULL DEFAULT NULL,
+  `Emp_password` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Emp_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `federated`.`logs`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `federated`.`logs` (
+  `Log_ID` INT NOT NULL,
+  `Meeting_Date` DATE NULL DEFAULT NULL,
+  `Meeting_Notes` VARCHAR(8000) NULL DEFAULT NULL,
+  PRIMARY KEY (`Log_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `federated`.`marketing representative`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `federated`.`marketing representative` (
+  `Marketing_Rep_ID` INT NOT NULL,
+  `District_manager_ID` INT NULL DEFAULT NULL,
+  `Emp_ID` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`Marketing_Rep_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `federated`.`owner`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `federated`.`owner` (
+  `Owner_ID` INT NOT NULL,
+  `Owner_First_Name` VARCHAR(45) NULL DEFAULT NULL,
+  `Owner_Last_Name` VARCHAR(45) NULL DEFAULT NULL,
+  `Owner_Phone_Num` VARCHAR(45) NULL DEFAULT NULL,
+  `Owner_Birthday` DATE NULL DEFAULT NULL,
+  `Additonal_Notes` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Owner_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `federated`.`regional manager`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `federated`.`regional manager` (
+  `Regional_Manager_ID` INT NOT NULL,
+  `Emp_ID` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Regional_Manager_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `federated`.`status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `federated`.`status` (
+  `Policy_ID` INT NOT NULL,
+  `Insured` TINYINT NULL DEFAULT '0',
+  `Suspect/Prospect/Top30` VARCHAR(2000) NULL DEFAULT NULL,
+  `Client_ID` INT NULL DEFAULT NULL,
+  `Policy_End_Date` DATE NULL DEFAULT NULL,
+  PRIMARY KEY (`Policy_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `federated`.`territory`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `federated`.`territory` (
+  `Territory_ID` INT NOT NULL,
+  `Emp_ID` INT NULL DEFAULT NULL,
+  `Client_ID` INT NULL DEFAULT NULL,
+  `Area` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Territory_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+--------------------------------------------------------
+-- INSERTING DATA INTO FEDERATED BOARDMEMBERS
+--------------------------------------------------------
+Insert into `federated`.`board members`(`Board_Member_ID`, `Client_ID`, `Owner_ID`)
+	Values(190, 500, 800);
+Insert into `federated`.`board members`(`Board_Member_ID`, `Client_ID`, `Owner_ID`)
+	Values(191, 501, 801);
+Insert into `federated`.`board members`(`Board_Member_ID`, `Client_ID`, `Owner_ID`)
+	Values(192, 502, 802);
+Insert into `federated`.`board members`(`Board_Member_ID`, `Client_ID`, `Owner_ID`)
+	Values(193, 503, 803);
+Insert into `federated`.`board members`(`Board_Member_ID`, `Client_ID`, `Owner_ID`)
+	Values(194, 504, 804);
+    
+--------------------------------------------------------
+-- INSERTING DATA INTO FEDERATED CALENDAR
+--------------------------------------------------------
+Insert into `federated`.`calendar`(`Calendar_ID`, `Current_Date`, `Deadline/Expiration`, `Reminder`, `Marketing_Rep_ID`)
+	Values(200, '2023-04-23', '2024-01-23', 'There is 9 months until the expiration date', 300);
+Insert into `federated`.`calendar`(`Calendar_ID`, `Current_Date`, `Deadline/Expiration`, `Reminder`, `Marketing_Rep_ID`)
+	Values(201, '2023-04-24', '2024-02-24', 'There is 10 months until the expiration date', 301);
+Insert into `federated`.`calendar`(`Calendar_ID`, `Current_Date`, `Deadline/Expiration`, `Reminder`, `Marketing_Rep_ID`)
+	Values(202, '2023-04-23', '2023-06-23', 'There is 2 months until the expiration date', 301);
+Insert into `federated`.`calendar`(`Calendar_ID`, `Current_Date`, `Deadline/Expiration`, `Reminder`, `Marketing_Rep_ID`)
+	Values(203, '2023-04-24', '2023-09-24', 'There is 5 months until the expiration date', 300);
+Insert into `federated`.`calendar`(`Calendar_ID`, `Current_Date`, `Deadline/Expiration`, `Reminder`, `Marketing_Rep_ID`)
+	Values(204, '2023-04-23', '2023-04-28', 'There are 5 days until the expiration date', 300);
+    
+--------------------------------------------------------
+-- INSERTING DATA INTO FEDERATED CLIENT
+--------------------------------------------------------
+Insert into `federated`.`client`(`Client_ID`, `Client_Company_Name`, `Client_Phone_Number`, `Client_Email_Address`, `Log_ID`, `Calendar_ID`)
+	Values(500, 'Corals Plumbing Service', '651-300-9678', 'CoralsPlumbing@gmail.com', 1000, 200);
+Insert into `federated`.`client`(`Client_ID`, `Client_Company_Name`, `Client_Phone_Number`, `Client_Email_Address`, `Log_ID`, `Calendar_ID`)
+	Values(501, 'Rakils Electrical', '612-406-8224', 'RakilsElectrical@gmail.com', 1001, 201);
+Insert into `federated`.`client`(`Client_ID`, `Client_Company_Name`, `Client_Phone_Number`, `Client_Email_Address`, `Log_ID`, `Calendar_ID`)
+	Values(502, 'Sherry Cake Factory', '612-477-1288', 'SherrysCake@gmail.com', 1002, 202);
+Insert into `federated`.`client`(`Client_ID`, `Client_Company_Name`, `Client_Phone_Number`, `Client_Email_Address`, `Log_ID`, `Calendar_ID`)
+	Values(503, 'Jerry&Ferry', '651-223-6677', 'Jerry&Ferry@gmail.com', 1003, 203);
+Insert into `federated`.`client`(`Client_ID`, `Client_Company_Name`, `Client_Phone_Number`, `Client_Email_Address`, `Log_ID`, `Calendar_ID`)
+	Values(504, 'Lunars Furniture', '612-166-0000', 'LunarsFurniture@gmail.com', 1004, 204);
+
+--------------------------------------------------------
+-- INSERTING DATA INTO FEDERATED CLIENTLIST
+--------------------------------------------------------
+Insert into `federated`.`client list`(`Client_list_ID`, `Client_ID`, `Marketing_Rep_ID`)
+	Values(700, 500, 300);
+Insert into `federated`.`client list`(`Client_list_ID`, `Client_ID`, `Marketing_Rep_ID`)
+	Values(701, 501, 301);
+Insert into `federated`.`client list`(`Client_list_ID`, `Client_ID`, `Marketing_Rep_ID`)
+	Values(702, 502, 302);
+Insert into `federated`.`client list`(`Client_list_ID`, `Client_ID`, `Marketing_Rep_ID`)
+	Values(703, 503, 303);
+Insert into `federated`.`client list`(`Client_list_ID`, `Client_ID`, `Marketing_Rep_ID`)
+	Values(704, 504, 304);
+
+--------------------------------------------------------
+-- INSERTING DATA INTO FEDERATED DISTRICTMANAGER
+--------------------------------------------------------
+Insert into `federated`.`district manager`(`District_manager_ID`, `Regional_Manager_ID`, `Emp_ID`)
+	Values(400, 600, 900);
+Insert into `federated`.`district manager`(`District_manager_ID`, `Regional_Manager_ID`, `Emp_ID`)
+	Values(401, 600, 904);
+
+--------------------------------------------------------
+-- INSERTING DATA INTO FEDERATED EMPLOYEE
+--------------------------------------------------------
+Insert into `federated`.`employee`(`Emp_ID`, `Emp_First_name`, `Emp_last_name`, `Emp_job_title`, `Emp_username`, `Emp_password`)
+	Values(900, 'Carol', 'Jones', 'District Manager', 'cJones22', 'senojlorac');
+Insert into `federated`.`employee`(`Emp_ID`, `Emp_First_name`, `Emp_last_name`, `Emp_job_title`, `Emp_username`, `Emp_password`)
+	Values(901, 'Jake', 'Farm', 'Marketing Representative', 'jFarm00', 'serviosFarm11!');
+Insert into `federated`.`employee`(`Emp_ID`, `Emp_First_name`, `Emp_last_name`, `Emp_job_title`, `Emp_username`, `Emp_password`)
+	Values(902, 'Larry', 'Riles', 'Marketing Representative', 'RilesZa09', 'RilesZaLarry98!!');
+Insert into `federated`.`employee`(`Emp_ID`, `Emp_First_name`, `Emp_last_name`, `Emp_job_title`, `Emp_username`, `Emp_password`)
+	Values(903, 'Mary', 'Johnson', 'Regional Manager', 'JohnsonJohnson11', '**JohnsonMaryMary!!');
+Insert into `federated`.`employee`(`Emp_ID`, `Emp_First_name`, `Emp_last_name`, `Emp_job_title`, `Emp_username`, `Emp_password`)
+	Values(904, 'Stan', 'Berry', 'District Manager', 'SavvyBerry', 'BerrySavvyBee00');
+    
+--------------------------------------------------------
+-- INSERTING DATA INTO FEDERATED LOGS
+--------------------------------------------------------
+Insert into `federated`.`logs`(`Log_ID`, `Meeting_Date`, `Meeting_Notes`)
+	Values(1000, '2023-01-27', 'Had some disagreements on the terms and conditions.');
+Insert into `federated`.`logs`(`Log_ID`, `Meeting_Date`, `Meeting_Notes`)
+	Values(1001, '2023-01-06', 'Meeting went well, there were no problems and we will be meeting again.');
+Insert into `federated`.`logs`(`Log_ID`, `Meeting_Date`, `Meeting_Notes`)
+	Values(1002, '2023-04-10', 'Meeting had some rocky moments but overall was a success.');
+Insert into `federated`.`logs`(`Log_ID`, `Meeting_Date`, `Meeting_Notes`)
+	Values(1003, '2023-03-18', 'The other party seemed uninterested and it was hard to get their attention.');
+Insert into `federated`.`logs`(`Log_ID`, `Meeting_Date`, `Meeting_Notes`)
+	Values(1004, '2023-05-13', 'Everything went well and we will be meeting shortly.');
+    
+--------------------------------------------------------
+-- INSERTING DATA INTO FEDERATED MARKETINGREPRESENTATIVE
+--------------------------------------------------------
+Insert into `federated`.`marketing representative`(`Marketing_Rep_ID`, `District_manager_ID`, `Emp_ID`)
+	Values(300, 1200, 901);
+Insert into `federated`.`marketing representative`(`Marketing_Rep_ID`, `District_manager_ID`, `Emp_ID`)
+	Values(301, 1201, 902);
+
+--------------------------------------------------------
+-- INSERTING DATA INTO FEDERATED OWNER
+--------------------------------------------------------
+Insert into `federated`.`owner`(`Owner_ID`, `Owner_First_Name`, `Owner_Last_Name`, `Owner_Phone_Num`, `Owner_Birthday`, `Additonal_Notes`)
+	Values(800, 'Jane', 'Frost', '612-700-2233', '1995-05-28', NULL);
+Insert into `federated`.`owner`(`Owner_ID`, `Owner_First_Name`, `Owner_Last_Name`, `Owner_Phone_Num`, `Owner_Birthday`, `Additonal_Notes`)
+	Values(801, 'Lane', 'Carne', '651-235-9292', '1989-04-11', 'Has two children and plays golf.');
+Insert into `federated`.`owner`(`Owner_ID`, `Owner_First_Name`, `Owner_Last_Name`, `Owner_Phone_Num`, `Owner_Birthday`, `Additonal_Notes`)
+	Values(802, 'Daniel', 'Caesar', '612-853-2493', '1985-11-30', NULL);
+Insert into `federated`.`owner`(`Owner_ID`, `Owner_First_Name`, `Owner_Last_Name`, `Owner_Phone_Num`, `Owner_Birthday`, `Additonal_Notes`)
+	Values(803, 'Tyler', 'Marrow', '651-118-2777', '1999-10-16', 'Does not have any hobbies but has one pet.');
+Insert into `federated`.`owner`(`Owner_ID`, `Owner_First_Name`, `Owner_Last_Name`, `Owner_Phone_Num`, `Owner_Birthday`, `Additonal_Notes`)
+	Values(804, 'Lee', 'Lee', '651-555-1182', '2001-03-03', 'Likes to play video games in their spare time');
+
+--------------------------------------------------------
+-- INSERTING DATA INTO FEDERATED REGIONALMANAGER
+--------------------------------------------------------
+Insert into `federated`.`regional manager`(`Regional_Manager_ID`, `Emp_ID`)
+	Values(600, 903);
+    
+--------------------------------------------------------
+-- INSERTING DATA INTO FEDERATED STATUS
+--------------------------------------------------------
+Insert into `federated`.`status`(`Policy_ID`, `Insured`, `Suspect/Prospect/Top30`, `Client_ID`, `Policy_End_Date`)
+	Values(1500, 1, NULL, 500, '2024-01-23');
+Insert into `federated`.`status`(`Policy_ID`, `Insured`, `Suspect/Prospect/Top30`, `Client_ID`, `Policy_End_Date`)
+	Values(1501, 0, 'Prospect', 501, NULL);
+Insert into `federated`.`status`(`Policy_ID`, `Insured`, `Suspect/Prospect/Top30`, `Client_ID`, `Policy_End_Date`)
+	Values(1502, 1, 'Top 30', 502, NULL);
+Insert into `federated`.`status`(`Policy_ID`, `Insured`, `Suspect/Prospect/Top30`, `Client_ID`, `Policy_End_Date`)
+	Values(1503, 0, 'Suspect', 503, NULL);
+Insert into `federated`.`status`(`Policy_ID`, `Insured`, `Suspect/Prospect/Top30`, `Client_ID`, `Policy_End_Date`)
+	Values(1504, 1, NULL, 504, '2024-02-24');
+
+--------------------------------------------------------
+-- INSERTING DATA INTO FEDERATED TERRITORY
+--------------------------------------------------------
+Insert into `federated`.`territory`( `Territory_ID`, `Emp_ID`, `Client_ID`, `Area`)
+	Values(1700, 901, 500, 'St.Paul');
+Insert into `federated`.`territory`( `Territory_ID`, `Emp_ID`, `Client_ID`, `Area`)
+	Values(1701, 901, 501, 'Minneapolis');
+Insert into `federated`.`territory`( `Territory_ID`, `Emp_ID`, `Client_ID`, `Area`)
+	Values(1702, 902, 502, 'Mankato');
+Insert into `federated`.`territory`( `Territory_ID`, `Emp_ID`, `Client_ID`, `Area`)
+	Values(1703, 902, 503, 'Mankato');
+Insert into `federated`.`territory`( `Territory_ID`, `Emp_ID`, `Client_ID`, `Area`)
+	Values(1704, 901, 504, 'Bloomington');
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
